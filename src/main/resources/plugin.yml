@@ -1,0 +1,14 @@
+name: ItemBattle
+version: '${version}'
+
+main: net.itemBattle.ItemBattle
+api-version: '26.1.2'
+load: POSTWORLD
+
+authors: [ TobiasF2211 ]
+
+commands:
+  itembattle:
+    usage: /itembattle <SubCommand>
+    aliases:
+      - ib
