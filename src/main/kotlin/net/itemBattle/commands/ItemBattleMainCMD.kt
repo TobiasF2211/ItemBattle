@@ -6,8 +6,10 @@ import net.itemBattle.utils.Prefix
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
+import org.bukkit.command.TabCompleter
+import java.util.*
 
-class ItemBattleMainCMD : CommandExecutor {
+class ItemBattleMainCMD : CommandExecutor, TabCompleter {
 
     val subCommands = HashMap<String, IBCmd>()
 
@@ -33,5 +35,29 @@ class ItemBattleMainCMD : CommandExecutor {
 
     private fun add(cmd: IBCmd) {
         subCommands[cmd.cmd] = cmd
+    }
+
+    override fun onTabComplete(sender: CommandSender, command: Command, label: String, args: Array<out String>): List<String> {
+        if (!(command.name.equals("itembattle", true)
+                    || command.name.equals("ib", true))
+        ) return listOf()
+
+        val completions = ArrayList<String>()
+
+        if (args.size == 1) {
+            val currentInput: String = args[0].lowercase()
+
+            completions.addAll(
+                subCommands.keys.stream()
+                    .filter {
+                        completion: String -> completion.startsWith(currentInput)
+                    }
+                    .toList()
+            )
+
+            return completions
+        }
+
+        return listOf()
     }
 }

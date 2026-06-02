@@ -2,9 +2,9 @@ package net.itemBattle.team
 
 import java.util.UUID
 
-data class Team(val teamName: String) {
+data class Team(val teamIndex: Int) {
 
-    private val members = ArrayList<UUID>()
+    val members = ArrayList<UUID>()
 
     fun addMember(uuid: UUID) {
         this.members.add(uuid)
