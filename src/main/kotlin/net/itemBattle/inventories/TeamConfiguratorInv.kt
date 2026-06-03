@@ -155,7 +155,7 @@ class TeamConfiguratorInv(private var player: Player) : InventoryHolder {
             openInventory()
         }
 
-        for (team in TeamManager.teams) {
+        team@ for (team in TeamManager.teams) {
             val delSlot = 5 * 9 + team.index() * 2
             val addMemberIndex = team.members.size * 9 + team.index() * 2 + 9
 
@@ -169,6 +169,19 @@ class TeamConfiguratorInv(private var player: Player) : InventoryHolder {
             if (slot == addMemberIndex) {
                 openAddMemberInput(team.index())
                 break
+            }
+
+            var memberIndex = team.index() * 2
+
+            for (member in team.members) {
+                memberIndex += 9
+
+                if (slot == memberIndex) {
+                    team.remove(member)
+                    gui.clear()
+                    openInventory()
+                    break@team
+                }
             }
         }
     }
