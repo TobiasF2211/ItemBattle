@@ -7,11 +7,14 @@ plugins {
 repositories {
     mavenCentral()
     maven("https://repo.papermc.io/repository/maven-public/")
+    maven("https://mvn.wesjd.net/")
+
 }
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:26.1.2.build.+")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("net.wesjd:anvilgui:1.10.13-SNAPSHOT")
 }
 
 kotlin {
