@@ -1,8 +1,8 @@
 package net.itemBattle.team
 
-import java.util.UUID
+import java.util.*
 
-data class Team(val teamIndex: Int) {
+class Team {
 
     val members = ArrayList<UUID>()
 
@@ -13,4 +13,6 @@ data class Team(val teamIndex: Int) {
     fun remove(uuid: UUID) {
         this.members.remove(uuid)
     }
+
+    fun index(): Int = TeamManager.teams.indexOf(this)
 }

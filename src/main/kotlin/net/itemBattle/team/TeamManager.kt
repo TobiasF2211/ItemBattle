@@ -5,7 +5,7 @@ object TeamManager {
     val teams = ArrayList<Team>()
 
     fun createTeam() {
-        teams.add(Team(teams.size))
+        teams.add(Team())
     }
 
     fun deleteTeam(teamIndex: Int) {
