@@ -1,5 +1,6 @@
 package net.itemBattle.commands
 
+import net.itemBattle.commands.subcmds.DebugCMD
 import net.itemBattle.commands.subcmds.HelpCMD
 import net.itemBattle.commands.subcmds.TeamConfiguratorCMD
 import net.itemBattle.utils.Prefix
@@ -15,6 +16,7 @@ class ItemBattleMainCMD : CommandExecutor, TabCompleter {
     init {
         add(HelpCMD())
         add(TeamConfiguratorCMD())
+        add(DebugCMD())
     }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {

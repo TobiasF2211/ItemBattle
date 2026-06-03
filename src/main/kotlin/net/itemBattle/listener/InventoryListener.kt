@@ -14,7 +14,7 @@ class InventoryListener : Listener {
 
         if (holder is TeamConfiguratorInv) {
             event.isCancelled = true
-            holder.onClick(event, event.slot)
+            holder.onClick(event.slot)
         }
     }
 }

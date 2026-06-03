@@ -9,7 +9,6 @@ import net.wesjd.anvilgui.AnvilGUI
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player
-import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
 import org.bukkit.inventory.ItemStack
@@ -147,7 +146,7 @@ class TeamConfiguratorInv(private var player: Player) : InventoryHolder {
             .open(player)
     }
 
-    fun onClick(event: InventoryClickEvent, slot: Int) {
+    fun onClick(slot: Int) {
         val createTeamPos = TeamManager.teams.size * 2
 
         if (slot == createTeamPos) {

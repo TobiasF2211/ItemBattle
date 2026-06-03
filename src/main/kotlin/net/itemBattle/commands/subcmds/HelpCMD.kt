@@ -15,6 +15,7 @@ class HelpCMD : IBCmd {
 
         commandSender.sendMessage("§8--- §eHELP §8---")
         helpMes("help", "Sends this message")
+        helpMes("teamconfig", "Opens the TeamConfigurator GUI")
         commandSender.sendMessage("§8--- §eHELP §8---")
     }
 

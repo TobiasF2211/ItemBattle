@@ -1,0 +1,25 @@
+package net.itemBattle.manager
+
+import net.itemBattle.team.Team
+import org.bukkit.Material
+import kotlin.random.Random
+
+object ItemGenerator {
+
+    fun generateItem(team: Team) {
+        val random = Random
+
+        var material: Material
+
+        do {
+            val index = random.nextInt(0, Material.entries.size)
+            material = Material.entries[index]
+        } while (
+            !material.isItem &&
+            !team.foundItems.contains(material) &&
+            team.foundItems.size < Material.entries.size / 2
+        )
+
+        team.setCurrentItem(material)
+    }
+}
