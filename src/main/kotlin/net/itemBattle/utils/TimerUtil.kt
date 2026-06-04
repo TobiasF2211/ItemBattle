@@ -23,7 +23,7 @@ class TimerUtil {
                 if (!paused) secondsRemaining--
 
                 if (secondsRemaining <= 0) {
-                    timerFinished.apply {}
+                    timerFinished()
                     runnable.cancel()
                     timerRenderer.cancel()
                 }

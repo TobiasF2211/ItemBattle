@@ -1,6 +1,8 @@
 package net.itemBattle.team
 
 import net.itemBattle.manager.ItemGenerator
+import net.itemBattle.renderer.Animations
+import net.itemBattle.renderer.ItemDisplayOverHead
 import net.itemBattle.utils.Format
 import net.itemBattle.utils.TeamColor
 import net.kyori.adventure.text.Component
@@ -16,6 +18,8 @@ class Team(var scoreboardTeam: Team) {
 
     val foundItems = ArrayList<Material>()
 
+    val itemDisplayOverHead = ItemDisplayOverHead()
+
     lateinit var prefix: String
 
     fun init() {
@@ -27,7 +31,6 @@ class Team(var scoreboardTeam: Team) {
         set(material) {
             field = material ?: return
 
-            // TODO: rendering
             renderCurrentItem(material)
         }
 
@@ -42,6 +45,7 @@ class Team(var scoreboardTeam: Team) {
         this.members.remove(uuid)
 
         val player = Bukkit.getPlayer(uuid) ?: return
+
         scoreboardTeam.removePlayer(player)
         player.displayName(Component.text(player.name))
     }
@@ -54,9 +58,7 @@ class Team(var scoreboardTeam: Team) {
         for (uuid in members) {
             val player = Bukkit.getPlayer(uuid) ?: continue
 
-            val displayName = Component.translatable(material.translationKey())
-
-            player.sendMessage(Component.text("New Item: ").append(displayName))
+            Animations.newItemAnimation(player, material)
 
             // check if someone already has the item
             if (ItemGenerator.containsItem(player.inventory, material)) someoneHasIt = true

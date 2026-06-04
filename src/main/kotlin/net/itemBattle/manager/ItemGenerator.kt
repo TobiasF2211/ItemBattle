@@ -7,6 +7,8 @@ import kotlin.random.Random
 
 object ItemGenerator {
 
+    private val illegalItems = listOf(Material.BARRIER, Material.BEDROCK)
+
     fun generateItem(team: Team) {
         val random = Random
 
@@ -18,7 +20,8 @@ object ItemGenerator {
         } while (
             !material.isItem &&
             !team.foundItems.contains(material) &&
-            team.foundItems.size < Material.entries.size / 2
+            team.foundItems.size < Material.entries.size / 2 &&
+            illegalItems.contains(material)
         )
 
         team.currentItem = material
