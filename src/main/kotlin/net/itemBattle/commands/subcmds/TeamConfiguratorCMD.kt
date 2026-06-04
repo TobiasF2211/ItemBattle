@@ -19,7 +19,7 @@ class TeamConfiguratorCMD : IBCmd {
         TeamConfiguratorInv(commandSender).openInventory()
     }
 
-    override fun getTabCompleter(commandSender: CommandSender, strings: Array<String>): List<String> {
-        return listOf()
+    override fun getTabCompleter(commandSender: CommandSender, args: Array<String>): List<String> {
+        return emptyList()
     }
 }

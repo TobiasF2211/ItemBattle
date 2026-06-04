@@ -1,13 +1,12 @@
 package net.itemBattle.inventories
 
-import net.itemBattle.ItemBattle
 import net.itemBattle.team.TeamManager
 import net.itemBattle.utils.Format
 import net.itemBattle.utils.Prefix
 import net.kyori.adventure.text.Component
-import net.wesjd.anvilgui.AnvilGUI
 import org.bukkit.Bukkit
 import org.bukkit.Material
+import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
@@ -112,44 +111,14 @@ class TeamConfiguratorInv(private var player: Player) : InventoryHolder {
     }
 
     private fun openAddMemberInput(teamIndex: Int) {
-        AnvilGUI.Builder()
-            .onClick { slot, snapshot ->
-                if (slot != AnvilGUI.Slot.OUTPUT) {
-                    return@onClick listOf()
-                }
-
-                if (snapshot.text == "") {
-                    return@onClick listOf(AnvilGUI.ResponseAction.close())
-                }
-
-                val target = Bukkit.getPlayer(snapshot.text)
-
-                if (target != null) {
-                    val team = TeamManager.getTeam(teamIndex) ?: return@onClick listOf(AnvilGUI.ResponseAction.close())
-
-                    if (team.members.contains(target.uniqueId)) {
-                        return@onClick listOf(AnvilGUI.ResponseAction.replaceInputText("Player already has a team."))
-                    }
-
-                    team.addMember(target.uniqueId)
-                    return@onClick listOf(AnvilGUI.ResponseAction.close())
-                } else {
-                    return@onClick listOf(AnvilGUI.ResponseAction.replaceInputText("Player was not found."))
-                }
-
-                listOf()
-            }
-            .onClose { openInventory() }
-            .title("Add a teammember")
-            .text("Player name or nothing to cancel")
-            .plugin(ItemBattle.instance)
-            .open(player)
+        TeamAddMemberInv(player, TeamManager.teams[teamIndex], this).openInventory()
     }
 
     fun onClick(slot: Int) {
         val createTeamPos = TeamManager.teams.size * 2
 
         if (slot == createTeamPos) {
+            player.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1F, 1F)
             TeamManager.createTeam()
             openInventory()
         }
@@ -159,6 +128,7 @@ class TeamConfiguratorInv(private var player: Player) : InventoryHolder {
             val addMemberIndex = team.members.size * 9 + team.index() * 2 + 9
 
             if (slot == delSlot) {
+                player.playSound(player, Sound.ENTITY_VILLAGER_NO, 1F, 1F)
                 TeamManager.deleteTeam(team.index())
                 gui.clear()
                 openInventory()

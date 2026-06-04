@@ -1,7 +1,7 @@
 package net.itemBattle.renderer
 
 import net.itemBattle.ItemBattle
-import net.itemBattle.team.Team
+import net.itemBattle.team.TeamManager
 import net.itemBattle.utils.Format
 import net.itemBattle.utils.TimerUtil
 import org.bukkit.Bukkit
@@ -14,14 +14,12 @@ class TimerRenderer {
     lateinit var runnable: BukkitTask
     lateinit var timerUtil: TimerUtil
 
-    fun start(team: Team, timerUtil: TimerUtil) {
+    fun start(timerUtil: TimerUtil) {
         this.timerUtil = timerUtil
 
         this.runnable = object : BukkitRunnable() {
             override fun run() {
-                val phase = gradientPhase(3000)
-
-                for (uuid in team.members) {
+                for (uuid in TeamManager.getAllPlayers()) {
                     val player = Bukkit.getPlayer(uuid) ?: continue
 
                     sendActionBar(player)
@@ -34,7 +32,7 @@ class TimerRenderer {
 
     fun sendActionBar(player: Player) {
         val seconds = timerUtil.secondsRemaining
-        val phase = gradientPhase(3000)
+        val phase = gradientPhase()
 
         val hours = seconds / 3600
         val minutes = seconds / 60 % 60
@@ -50,10 +48,10 @@ class TimerRenderer {
         player.sendActionBar(actionBarMessage)
     }
 
-    private fun gradientPhase(durationMillis: Long): Double {
+    private fun gradientPhase(): Double {
         val now = System.currentTimeMillis()
 
-        val progress = (now % durationMillis) / durationMillis.toDouble()
+        val progress = (now % 3000) / 3000.0
 
         return progress * 2.0 - 1.0
     }

@@ -2,6 +2,7 @@ package net.itemBattle.commands
 
 import net.itemBattle.commands.subcmds.DebugCMD
 import net.itemBattle.commands.subcmds.HelpCMD
+import net.itemBattle.commands.subcmds.StartCMD
 import net.itemBattle.commands.subcmds.TeamConfiguratorCMD
 import net.itemBattle.utils.Prefix
 import org.bukkit.command.Command
@@ -17,6 +18,7 @@ class ItemBattleMainCMD : CommandExecutor, TabCompleter {
         add(HelpCMD())
         add(TeamConfiguratorCMD())
         add(DebugCMD())
+        add(StartCMD())
     }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
@@ -38,11 +40,7 @@ class ItemBattleMainCMD : CommandExecutor, TabCompleter {
         subCommands[cmd.cmd] = cmd
     }
 
-    override fun onTabComplete(sender: CommandSender, command: Command, label: String, args: Array<out String>): List<String> {
-        if (!(command.name.equals("itembattle", true)
-                    || command.name.equals("ib", true))
-        ) return listOf()
-
+    override fun onTabComplete(sender: CommandSender, command: Command, label: String, args: Array<String>): List<String> {
         val completions = ArrayList<String>()
 
         if (args.size == 1) {
@@ -59,6 +57,12 @@ class ItemBattleMainCMD : CommandExecutor, TabCompleter {
             return completions
         }
 
-        return listOf()
+        for (cmdString in subCommands.keys) {
+            if (cmdString != args[0]) continue
+
+            completions.addAll(subCommands[cmdString]!!.getTabCompleter(sender, args))
+        }
+
+        return completions
     }
 }

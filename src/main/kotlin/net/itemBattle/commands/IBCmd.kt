@@ -8,5 +8,5 @@ interface IBCmd {
 
     fun execute(commandSender: CommandSender, args: Array<out String>)
 
-    fun getTabCompleter(commandSender: CommandSender, strings: Array<String>): List<String>
+    fun getTabCompleter(commandSender: CommandSender, args: Array<String>): List<String>
 }

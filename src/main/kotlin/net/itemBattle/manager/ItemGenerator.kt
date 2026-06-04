@@ -2,6 +2,7 @@ package net.itemBattle.manager
 
 import net.itemBattle.team.Team
 import org.bukkit.Material
+import org.bukkit.inventory.Inventory
 import kotlin.random.Random
 
 object ItemGenerator {
@@ -20,6 +21,16 @@ object ItemGenerator {
             team.foundItems.size < Material.entries.size / 2
         )
 
-        team.setCurrentItem(material)
+        team.currentItem = material
+    }
+
+    fun containsItem(inv: Inventory, material: Material): Boolean {
+        for (content in inv.contents) {
+            if (content == null) continue
+
+            if (content.type == material) return true
+        }
+
+        return false
     }
 }

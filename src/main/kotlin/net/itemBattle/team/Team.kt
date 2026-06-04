@@ -1,31 +1,55 @@
 package net.itemBattle.team
 
-import net.itemBattle.utils.Prefix
+import net.itemBattle.manager.ItemGenerator
+import net.itemBattle.utils.Format
+import net.itemBattle.utils.TeamColor
 import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.Material
+import org.bukkit.entity.Player
+import org.bukkit.scoreboard.Team
 import java.util.*
 
-class Team {
+class Team(var scoreboardTeam: Team) {
 
     val members = ArrayList<UUID>()
 
     val foundItems = ArrayList<Material>()
 
-    var currentItem: Material? = null
+    lateinit var prefix: String
 
-    fun addMember(uuid: UUID) {
-        this.members.add(uuid)
+    fun init() {
+        this.prefix = "${TeamColor.getColorFromTeam(this)}Team ${index() + 1} <dark_gray>|"
+        this.scoreboardTeam.prefix(Format.of("$prefix "))
+    }
+
+    var currentItem: Material? = null
+        set(material) {
+            field = material ?: return
+
+            // TODO: rendering
+            renderCurrentItem(material)
+        }
+
+    fun addMember(player: Player) {
+        this.members.add(player.uniqueId)
+
+        scoreboardTeam.addPlayer(player)
+        player.displayName(Format.of("$prefix <white>${player.name}"))
     }
 
     fun remove(uuid: UUID) {
         this.members.remove(uuid)
+
+        val player = Bukkit.getPlayer(uuid) ?: return
+        scoreboardTeam.removePlayer(player)
+        player.displayName(Component.text(player.name))
     }
 
-    fun setCurrentItem(material: Material) {
-        this.currentItem = material
+    fun index(): Int = TeamManager.teams.indexOf(this)
 
-        // TODO: rendering
+    private fun renderCurrentItem(material: Material) {
+        var someoneHasIt = false
 
         for (uuid in members) {
             val player = Bukkit.getPlayer(uuid) ?: continue
@@ -33,8 +57,12 @@ class Team {
             val displayName = Component.translatable(material.translationKey())
 
             player.sendMessage(Component.text("New Item: ").append(displayName))
-        }
-    }
 
-    fun index(): Int = TeamManager.teams.indexOf(this)
+            // check if someone already has the item
+            if (ItemGenerator.containsItem(player.inventory, material)) someoneHasIt = true
+        }
+
+        // now the item generator generates only ones.
+        if (someoneHasIt) ItemGenerator.generateItem(this)
+    }
 }
