@@ -21,12 +21,23 @@ class ItemBattle : JavaPlugin() {
 
         registerListener()
 
+        // check if some of our teams still exist and remove them (cause of server crashes for example)
+        for (scoreboardTeam in Bukkit.getScoreboardManager().mainScoreboard.teams) {
+            if (scoreboardTeam.name.startsWith("itembattle_")) scoreboardTeam.unregister()
+        }
+
         logger.info("Loaded successfully!")
     }
 
     override fun onDisable() {
         // remove our garbage
 
+        cleanUp()
+
+        logger.info("Unloaded successfully!")
+    }
+
+    fun cleanUp() {
         for (team in TeamManager.teams) {
             team.scoreboardTeam.unregister()
         }
@@ -36,8 +47,6 @@ class ItemBattle : JavaPlugin() {
 
             player.displayName(Component.text(player.name))
         }
-
-        logger.info("Unloaded successfully!")
     }
 
     private fun registerListener() {

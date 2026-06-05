@@ -2,6 +2,7 @@ package net.itemBattle.commands
 
 import net.itemBattle.commands.subcmds.DebugCMD
 import net.itemBattle.commands.subcmds.HelpCMD
+import net.itemBattle.commands.subcmds.PauseTimerCMD
 import net.itemBattle.commands.subcmds.StartCMD
 import net.itemBattle.commands.subcmds.TeamConfiguratorCMD
 import net.itemBattle.utils.Prefix
@@ -19,6 +20,7 @@ class ItemBattleMainCMD : CommandExecutor, TabCompleter {
         add(TeamConfiguratorCMD())
         add(DebugCMD())
         add(StartCMD())
+        add(PauseTimerCMD())
     }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {

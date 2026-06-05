@@ -17,12 +17,7 @@ object ItemGenerator {
         do {
             val index = random.nextInt(0, Material.entries.size)
             material = Material.entries[index]
-        } while (
-            !material.isItem &&
-            !team.foundItems.contains(material) &&
-            team.foundItems.size < Material.entries.size / 2 &&
-            illegalItems.contains(material)
-        )
+        } while (!material.isItem || illegalItems.contains(material) || isSpawnEgg(material))
 
         team.currentItem = material
     }
@@ -35,5 +30,9 @@ object ItemGenerator {
         }
 
         return false
+    }
+
+    private fun isSpawnEgg(material: Material): Boolean {
+        return material.name.endsWith("_SPAWN_EGG")
     }
 }

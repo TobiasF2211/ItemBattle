@@ -49,10 +49,10 @@ class TeamAddMemberInv(
     }
 
     fun onClick(slot: Int) {
-        val player = playerSlot[slot] ?: return
+        val target = playerSlot[slot] ?: return
 
         player.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1F, 1F)
-        team.addMember(player)
+        team.addMember(target)
         gui.clear()
         openInventory()
     }

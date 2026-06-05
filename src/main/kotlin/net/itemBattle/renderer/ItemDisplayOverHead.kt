@@ -30,7 +30,6 @@ class ItemDisplayOverHead {
             ) { entity ->
                 entity.isPersistent = false
                 entity.teleportDuration = 3
-                entity.billboard = Display.Billboard.CENTER
 
                 entity.transformation = Transformation(
                     Vector3f(0f, 3.0f, 0f),

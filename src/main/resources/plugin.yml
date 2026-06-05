@@ -2,7 +2,7 @@ name: ItemBattle
 version: '${version}'
 
 main: net.itemBattle.ItemBattle
-api-version: '26.1.2'
+api-version: '1.13'
 load: POSTWORLD
 
 authors: [ TobiasF2211 ]

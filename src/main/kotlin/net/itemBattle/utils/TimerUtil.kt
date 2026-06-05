@@ -13,14 +13,17 @@ class TimerUtil {
 
     var secondsRemaining = 0
 
-    fun start(timeInMinutes: Int, timerFinished: () -> Unit) {
+    fun start(timeInMinutes: Int, timePassed: (Int) -> Unit, timerFinished: () -> Unit) {
         val timerRenderer = TimerRenderer()
         secondsRemaining = timeInMinutes * 60
         timerRenderer.start(this)
 
         this.runnable = object : BukkitRunnable() {
             override fun run() {
-                if (!paused) secondsRemaining--
+                if (!paused) {
+                    secondsRemaining--
+                    timePassed(secondsRemaining)
+                }
 
                 if (secondsRemaining <= 0) {
                     timerFinished()

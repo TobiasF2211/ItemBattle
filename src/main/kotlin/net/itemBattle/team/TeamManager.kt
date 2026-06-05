@@ -12,7 +12,7 @@ object TeamManager {
     val scoreboard = Bukkit.getScoreboardManager().mainScoreboard
 
     fun createTeam() {
-        val scoreTeam = scoreboard.registerNewTeam(UUID.randomUUID().toString())
+        val scoreTeam = scoreboard.registerNewTeam("itembattle_${UUID.randomUUID()}")
         val team = Team(scoreTeam)
 
         teams.add(team)
