@@ -1,10 +1,6 @@
 package net.itemBattle.commands
 
-import net.itemBattle.commands.subcmds.DebugCMD
-import net.itemBattle.commands.subcmds.HelpCMD
-import net.itemBattle.commands.subcmds.PauseTimerCMD
-import net.itemBattle.commands.subcmds.StartCMD
-import net.itemBattle.commands.subcmds.TeamConfiguratorCMD
+import net.itemBattle.commands.subcmds.*
 import net.itemBattle.utils.Prefix
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor

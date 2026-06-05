@@ -4,20 +4,14 @@ import net.itemBattle.ItemBattle
 import net.itemBattle.renderer.Animations
 import net.itemBattle.team.Team
 import net.itemBattle.team.TeamManager
-import net.itemBattle.utils.Format
 import net.itemBattle.utils.Prefix
 import net.itemBattle.utils.TimerUtil
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.title.Title
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.Sound
 import org.bukkit.World
-import org.bukkit.potion.PotionEffect
-import org.bukkit.potion.PotionEffectType
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.scheduler.BukkitTask
-import java.util.Arrays
 
 object BattleManager {
 

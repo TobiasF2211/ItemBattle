@@ -4,7 +4,6 @@ import net.itemBattle.ItemBattle
 import net.itemBattle.team.Team
 import org.bukkit.Bukkit
 import org.bukkit.Material
-import org.bukkit.entity.Display
 import org.bukkit.entity.ItemDisplay
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
