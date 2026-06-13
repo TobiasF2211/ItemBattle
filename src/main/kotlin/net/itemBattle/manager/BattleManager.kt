@@ -4,12 +4,17 @@ import net.itemBattle.ItemBattle
 import net.itemBattle.renderer.Animations
 import net.itemBattle.team.Team
 import net.itemBattle.team.TeamManager
+import net.itemBattle.utils.Format
 import net.itemBattle.utils.Prefix
 import net.itemBattle.utils.TimerUtil
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
+import org.bukkit.Material
 import org.bukkit.Sound
 import org.bukkit.World
+import org.bukkit.enchantments.Enchantment
+import org.bukkit.inventory.ItemFlag
+import org.bukkit.inventory.ItemStack
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.scheduler.BukkitTask
 
@@ -23,7 +28,19 @@ object BattleManager {
 
     val places = HashMap<Int, Team>()
 
-    fun start(timeInMinutes: Int, world: World) {
+    fun getSkipItemStack(): ItemStack {
+        val skipStack = ItemStack(Material.BARRIER)
+        val skipMeta = skipStack.itemMeta
+        skipMeta.displayName(Format.of("<dark_gray>» <yellow>Skip"))
+        skipMeta.lore(listOf(Format.of("<dark_gray>➥ <gray>Skip the current item by right clicking.")))
+        skipMeta.addEnchant(Enchantment.MENDING, 1, true)
+        skipMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS)
+        skipStack.itemMeta = skipMeta
+
+        return skipStack
+    }
+
+    fun start(timeInMinutes: Int, world: World, skipsPerPlayer: Int) {
         this.activ = true
 
         object : BukkitRunnable() {
@@ -41,14 +58,14 @@ object BattleManager {
                 if (seconds < 0) {
                     this.cancel()
                     timerUtil.start(timeInMinutes, { seconds -> sendReminders(seconds) }) { finished() }
-                    perTeamAnimation(world)
+                    perTeamAnimation(world, skipsPerPlayer)
                     initItemChecker()
                 }
             }
         }.runTaskTimer(ItemBattle.instance, 0, 20L)
     }
 
-    private fun perTeamAnimation(world: World) {
+    private fun perTeamAnimation(world: World, skipsPerPlayer: Int) {
         for (team in TeamManager.teams) {
             ItemGenerator.generateItem(team)
             team.itemDisplayOverHead.start(team)
@@ -57,6 +74,10 @@ object BattleManager {
                 val player = Bukkit.getPlayer(uuid) ?: continue
 
                 Animations.startAnimation(world, player)
+
+                val skipStack = getSkipItemStack()
+                skipStack.amount = skipsPerPlayer
+                player.inventory.addItem(skipStack)
             }
         }
     }

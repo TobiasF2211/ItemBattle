@@ -12,8 +12,8 @@ class StartCMD : IBCmd {
     override val cmd: String = "start"
 
     override fun execute(commandSender: CommandSender, args: Array<out String>) {
-        if (args.size != 3) {
-            commandSender.sendMessage(Prefix.get() + "Usage§8: §e/ib start §8<§etime in minutes§8> <§eworld§8>")
+        if (args.size != 4) {
+            commandSender.sendMessage(Prefix.get() + "Usage§8: §e/ib start §8<§etime in minutes§8> <§eworld§8> <§eskips per player§8>")
             return
         }
 
@@ -23,8 +23,9 @@ class StartCMD : IBCmd {
         }
 
         val time = args[1].toIntOrNull()
+        val skips = args[3].toIntOrNull()
 
-        if (time == null || time < 0) {
+        if (time == null || time < 0 || skips == null || skips < 0) {
             commandSender.sendMessage(Prefix.get() + "You have to enter a correct, positive number.")
             return
         }
@@ -36,7 +37,7 @@ class StartCMD : IBCmd {
             return
         }
 
-        BattleManager.start(time, world)
+        BattleManager.start(time, world, skips)
     }
 
     override fun getTabCompleter(commandSender: CommandSender, args: Array<String>): List<String> {
@@ -45,6 +46,9 @@ class StartCMD : IBCmd {
         }
         if (args.size == 3) {
             return Bukkit.getWorlds().map { it.name }
+        }
+        if (args.size == 4) {
+            return listOf("skipsPerPlayer")
         }
         return emptyList()
     }
