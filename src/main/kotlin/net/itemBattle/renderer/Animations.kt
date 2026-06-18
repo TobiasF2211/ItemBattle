@@ -38,4 +38,11 @@ object Animations {
         player.sendMessage(Format.of("<gray>New Item<dark_gray>: ").append(displayName))
         player.sendMessage(Format.of("<dark_gray>----------"))
     }
+
+    fun skipAnimation(player: Player, playerWhoSkipped: Player) {
+        player.sendMessage(Format.of("<dark_gray>----------"))
+        player.sendMessage(Format.of("<dark_gray>➞ <red>${playerWhoSkipped.name} skipped the current item."))
+        player.sendMessage(Format.of("<dark_gray>----------"))
+        player.playSound(player, Sound.ENTITY_VILLAGER_HURT, 1F, 1F)
+    }
 }

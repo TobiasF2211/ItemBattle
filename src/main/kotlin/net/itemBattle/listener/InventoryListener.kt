@@ -2,10 +2,13 @@ package net.itemBattle.listener
 
 import net.itemBattle.inventories.TeamAddMemberInv
 import net.itemBattle.inventories.TeamConfiguratorInv
+import net.itemBattle.manager.BattleManager
+import net.itemBattle.team.TeamManager
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
+import org.bukkit.event.player.PlayerInteractEvent
 
 class InventoryListener : Listener {
 
@@ -30,5 +33,20 @@ class InventoryListener : Listener {
         val holder = inventory.holder
 
         if (holder is TeamAddMemberInv) holder.onClose()
+    }
+
+    @EventHandler
+    fun onItemInteract(event: PlayerInteractEvent) {
+        val player = event.player
+
+        if (player.inventory.itemInMainHand != BattleManager.getSkipItemStack()) return
+
+        event.isCancelled = true
+
+        player.inventory.itemInMainHand.amount -= 1
+
+        val team = TeamManager.getTeamFromPlayer(player)
+
+        team?.skipCurrentItem(player)
     }
 }

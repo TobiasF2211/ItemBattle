@@ -15,8 +15,8 @@ import java.util.*
 class Team(var scoreboardTeam: Team) {
 
     val members = ArrayList<UUID>()
-
     val foundItems = ArrayList<Material>()
+    val skipsPerPlayer = HashMap<UUID, Int>()
 
     val itemDisplayOverHead = ItemDisplayOverHead()
 
@@ -51,6 +51,18 @@ class Team(var scoreboardTeam: Team) {
     }
 
     fun index(): Int = TeamManager.teams.indexOf(this)
+
+    fun skipCurrentItem(playerWhoSkipped: Player) {
+        skipsPerPlayer[playerWhoSkipped.uniqueId] = skipsPerPlayer[playerWhoSkipped.uniqueId]?.minus(1) ?: return
+
+        for (uuid in members) {
+            val player = Bukkit.getPlayer(uuid) ?: continue
+
+            Animations.skipAnimation(player, playerWhoSkipped)
+        }
+
+        ItemGenerator.generateItem(this)
+    }
 
     private fun renderCurrentItem(material: Material) {
         var someoneHasIt = false

@@ -2,6 +2,7 @@ package net.itemBattle
 
 import net.itemBattle.commands.ItemBattleMainCMD
 import net.itemBattle.listener.InventoryListener
+import net.itemBattle.listener.PlayerListener
 import net.itemBattle.team.TeamManager
 import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
@@ -53,5 +54,6 @@ class ItemBattle : JavaPlugin() {
         val pl = Bukkit.getPluginManager()
 
         pl.registerEvents(InventoryListener(), this)
+        pl.registerEvents(PlayerListener(), this)
     }
 }
