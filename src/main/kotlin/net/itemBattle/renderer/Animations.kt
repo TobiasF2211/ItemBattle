@@ -1,9 +1,11 @@
 package net.itemBattle.renderer
 
+import net.itemBattle.team.Team
 import net.itemBattle.utils.Format
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextColor
 import net.kyori.adventure.title.Title
+import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.Sound
@@ -44,5 +46,22 @@ object Animations {
         player.sendMessage(Format.of("<dark_gray>➞ <red>${playerWhoSkipped.name} skipped the current item."))
         player.sendMessage(Format.of("<dark_gray>----------"))
         player.playSound(player, Sound.ENTITY_VILLAGER_HURT, 1F, 1F)
+    }
+
+    fun placeAnimation(team: Team, place: Int) {
+        for (uuid in team.members) {
+            val player = Bukkit.getPlayer(uuid) ?: continue
+
+            val color = when (place) {
+                1 -> "<rainbow>"
+                2 -> "<dark_gray>"
+                3 -> "<gold>"
+                else -> "<black>"
+            }
+
+            player.showTitle(Title.title(Format.of("<yellow>Team ${team.index() + 1} <gray>reached $color$place Place"),
+                Format.of("<green>Congratulations!")))
+            player.playSound(player, Sound.ENTITY_ENDER_DRAGON_GROWL, 0.5F, 1F)
+        }
     }
 }

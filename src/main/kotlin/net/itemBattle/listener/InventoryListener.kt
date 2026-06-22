@@ -1,5 +1,6 @@
 package net.itemBattle.listener
 
+import net.itemBattle.inventories.FoundItemsPreview
 import net.itemBattle.inventories.TeamAddMemberInv
 import net.itemBattle.inventories.TeamConfiguratorInv
 import net.itemBattle.manager.BattleManager
@@ -25,6 +26,10 @@ class InventoryListener : Listener {
             event.isCancelled = true
             holder.onClick(event.slot)
         }
+        if (holder is FoundItemsPreview) {
+            event.isCancelled = true
+            holder.onClick(event.slot, event)
+        }
     }
 
     @EventHandler
@@ -33,6 +38,7 @@ class InventoryListener : Listener {
         val holder = inventory.holder
 
         if (holder is TeamAddMemberInv) holder.onClose()
+        if (holder is FoundItemsPreview && !holder.finished) holder.onClose(event.player)
     }
 
     @EventHandler

@@ -1,6 +1,7 @@
 package net.itemBattle.manager
 
 import net.itemBattle.ItemBattle
+import net.itemBattle.inventories.FoundItemsPreview
 import net.itemBattle.renderer.Animations
 import net.itemBattle.team.Team
 import net.itemBattle.team.TeamManager
@@ -9,6 +10,7 @@ import net.itemBattle.utils.Prefix
 import net.itemBattle.utils.TimerUtil
 import org.bukkit.*
 import org.bukkit.enchantments.Enchantment
+import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 import org.bukkit.persistence.PersistentDataType
@@ -122,8 +124,12 @@ object BattleManager {
             team.itemDisplayOverHead.cancel()
         }
 
+        val players = ArrayList<Player>()
+
         for (uuid in TeamManager.getAllPlayers()) {
             val player = Bukkit.getPlayer(uuid) ?: continue
+
+            players.add(player)
 
             player.playSound(player, Sound.ENTITY_ENDER_DRAGON_GROWL, 1F, 1F)
             player.gameMode = GameMode.SPECTATOR
@@ -132,6 +138,8 @@ object BattleManager {
         ItemBattle.instance.cleanUp()
 
         val sortedTeams = TeamManager.teams.sortedByDescending { it.foundItems.size }
+
+        FoundItemsPreview(players, sortedTeams as ArrayList<Team>, places.keys.last()).openInventory()
 
         for ((place, team) in sortedTeams.withIndex()) {
             places[place + 1] = team
