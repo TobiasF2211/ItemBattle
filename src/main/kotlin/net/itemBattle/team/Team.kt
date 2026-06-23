@@ -9,6 +9,7 @@ import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemStack
 import org.bukkit.scoreboard.Team
 import java.util.*
 
@@ -54,6 +55,8 @@ class Team(var scoreboardTeam: Team) {
 
     fun skipCurrentItem(playerWhoSkipped: Player) {
         skipsPerPlayer[playerWhoSkipped.uniqueId] = skipsPerPlayer[playerWhoSkipped.uniqueId]?.minus(1) ?: return
+
+        playerWhoSkipped.inventory.addItem(ItemStack(currentItem!!))
 
         for (uuid in members) {
             val player = Bukkit.getPlayer(uuid) ?: continue

@@ -16,7 +16,7 @@ import org.bukkit.inventory.InventoryHolder
 import org.bukkit.inventory.ItemStack
 import org.bukkit.scheduler.BukkitRunnable
 
-class FoundItemsPreview(private var players: ArrayList<Player>, private var sortedTeams: ArrayList<Team>, private var place: Int) : InventoryHolder {
+class FoundItemsPreview(private var players: ArrayList<Player>, private var sortedTeams: List<Team>, private var place: Int) : InventoryHolder {
 
     var finished = false
 
@@ -79,6 +79,12 @@ class FoundItemsPreview(private var players: ArrayList<Player>, private var sort
 
         object : BukkitRunnable() {
             override fun run() {
+                if (index >= team.foundItems.size) {
+                    cancel()
+                    finished()
+                    return
+                }
+
                 gui.setItem(previewSlots[index], ItemStack(team.foundItems[index]))
 
                 for (player in players) {
@@ -91,11 +97,6 @@ class FoundItemsPreview(private var players: ArrayList<Player>, private var sort
                     for (slot in previewSlots) {
                         gui.clear(slot)
                     }
-                }
-
-                if (index >= team.foundItems.size) {
-                    cancel()
-                    finished()
                 }
             }
         }.runTaskTimer(ItemBattle.instance, 0, 20)

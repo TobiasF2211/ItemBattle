@@ -26,8 +26,6 @@ object BattleManager {
 
     lateinit var itemChecker: BukkitTask
 
-    val places = HashMap<Int, Team>()
-
     fun getSkipItemStack(): ItemStack {
         val key = NamespacedKey(ItemBattle.instance, "skip_itemstack")
 
@@ -139,14 +137,6 @@ object BattleManager {
 
         val sortedTeams = TeamManager.teams.sortedByDescending { it.foundItems.size }
 
-        FoundItemsPreview(players, sortedTeams as ArrayList<Team>, places.keys.last()).openInventory()
-
-        for ((place, team) in sortedTeams.withIndex()) {
-            places[place + 1] = team
-
-            Bukkit.getLogger().info(
-                "place ${place + 1}: Team ${team.index() + 1} (${team.foundItems.size} items)"
-            )
-        }
+        FoundItemsPreview(players, sortedTeams, sortedTeams.size).openInventory()
     }
 }
