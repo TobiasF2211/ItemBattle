@@ -14,7 +14,6 @@ class ItemBattleMainCMD : CommandExecutor, TabCompleter {
     init {
         add(HelpCMD())
         add(TeamConfiguratorCMD())
-        add(DebugCMD())
         add(StartCMD())
         add(PauseTimerCMD())
     }
