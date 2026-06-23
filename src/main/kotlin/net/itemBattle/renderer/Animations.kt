@@ -1,7 +1,10 @@
 package net.itemBattle.renderer
 
+import net.itemBattle.ItemBattle
 import net.itemBattle.team.Team
+import net.itemBattle.team.TeamManager
 import net.itemBattle.utils.Format
+import net.itemBattle.utils.Prefix
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextColor
 import net.kyori.adventure.title.Title
@@ -49,19 +52,27 @@ object Animations {
     }
 
     fun placeAnimation(team: Team, place: Int) {
-        for (uuid in team.members) {
+        for (uuid in TeamManager.getAllPlayers()) {
             val player = Bukkit.getPlayer(uuid) ?: continue
 
             val color = when (place) {
-                1 -> "<rainbow>"
+                1 -> "<yellow>"
                 2 -> "<dark_gray>"
                 3 -> "<gold>"
                 else -> "<black>"
             }
 
-            player.showTitle(Title.title(Format.of("<yellow>Team ${team.index() + 1} <gray>reached $color$place Place"),
-                Format.of("<green>Congratulations!")))
+            player.showTitle(Title.title(Format.of("<gray>Team <yellow>${team.index() + 1} <gray>#$color$place <dark_gray><<yellow>${team.foundItems.size} <gray>Items<dark_gray>>"),
+                Format.of("<yellow>Congratulations!")))
             player.playSound(player, Sound.ENTITY_ENDER_DRAGON_GROWL, 0.5F, 1F)
+
+            if (place == 1) {
+                player.playSound(player, Sound.ENTITY_FIREWORK_ROCKET_BLAST, 1F, 1F)
+                player.playSound(player, Sound.ENTITY_FIREWORK_ROCKET_LARGE_BLAST, 1F, 1F)
+                player.playSound(player, Sound.ENTITY_FIREWORK_ROCKET_TWINKLE, 1F, 1F)
+
+                player.sendMessage(Prefix.get() + "§eTeam ${team.index() + 1} won the match!")
+            }
         }
     }
 }

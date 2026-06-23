@@ -1,6 +1,8 @@
 package net.itemBattle.team
 
+import net.itemBattle.manager.BattleManager
 import net.itemBattle.manager.ItemGenerator
+import net.itemBattle.objects.FoundItem
 import net.itemBattle.renderer.Animations
 import net.itemBattle.renderer.ItemDisplayOverHead
 import net.itemBattle.utils.Format
@@ -16,7 +18,7 @@ import java.util.*
 class Team(var scoreboardTeam: Team) {
 
     val members = ArrayList<UUID>()
-    val foundItems = ArrayList<Material>()
+    val foundItems = ArrayList<FoundItem>()
     val skipsPerPlayer = HashMap<UUID, Int>()
 
     val itemDisplayOverHead = ItemDisplayOverHead()
@@ -64,6 +66,7 @@ class Team(var scoreboardTeam: Team) {
             Animations.skipAnimation(player, playerWhoSkipped)
         }
 
+        foundItems.add(FoundItem(currentItem!!, true, BattleManager.timerUtil.secondsRemaining))
         ItemGenerator.generateItem(this)
     }
 

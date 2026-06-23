@@ -1,6 +1,9 @@
 package net.itemBattle
 
+import net.itemBattle.commands.BackpackCMD
 import net.itemBattle.commands.ItemBattleMainCMD
+import net.itemBattle.commands.MsgCMD
+import net.itemBattle.commands.MsgTeamCMD
 import net.itemBattle.listener.InventoryListener
 import net.itemBattle.listener.PlayerListener
 import net.itemBattle.team.TeamManager
@@ -19,6 +22,9 @@ class ItemBattle : JavaPlugin() {
         instance = this
 
         getCommand("itembattle")?.setExecutor(ItemBattleMainCMD())
+        getCommand("msg")?.setExecutor(MsgCMD())
+        getCommand("msgteam")?.setExecutor(MsgTeamCMD())
+        getCommand("backpack")?.setExecutor(BackpackCMD())
 
         registerListener()
 

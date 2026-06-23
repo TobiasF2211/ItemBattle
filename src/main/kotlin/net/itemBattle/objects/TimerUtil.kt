@@ -1,4 +1,4 @@
-package net.itemBattle.utils
+package net.itemBattle.objects
 
 import net.itemBattle.ItemBattle
 import net.itemBattle.renderer.TimerRenderer

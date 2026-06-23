@@ -1,9 +1,10 @@
 package net.itemBattle.renderer
 
 import net.itemBattle.ItemBattle
+import net.itemBattle.objects.TimerUtil
 import net.itemBattle.team.TeamManager
 import net.itemBattle.utils.Format
-import net.itemBattle.utils.TimerUtil
+import net.itemBattle.utils.formatTime
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.scheduler.BukkitRunnable
@@ -34,15 +35,8 @@ class TimerRenderer {
         val seconds = timerUtil.secondsRemaining
         val phase = gradientPhase()
 
-        val hours = seconds / 3600
-        val minutes = seconds / 60 % 60
-        val remainingSeconds = seconds % 60
-
         val actionBarMessage = Format.of(
-            "<dark_gray>\u00bb <gradient:#fff7b8:#ffe200:$phase> <bold>${String.format(
-                "%02dh %02dm %02ds",
-                hours, minutes, remainingSeconds
-            )}</bold> </gradient><dark_gray>\u00ab"
+            "<dark_gray>\u00bb <gradient:#fff7b8:#ffe200:$phase> <bold>${formatTime(seconds)}</bold> </gradient><dark_gray>\u00ab"
         )
 
         player.sendActionBar(actionBarMessage)

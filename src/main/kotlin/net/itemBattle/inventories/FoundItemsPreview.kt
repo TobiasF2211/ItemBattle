@@ -4,6 +4,7 @@ import net.itemBattle.ItemBattle
 import net.itemBattle.renderer.Animations
 import net.itemBattle.team.Team
 import net.itemBattle.utils.Format
+import net.itemBattle.utils.formatTime
 import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.Material
@@ -85,7 +86,16 @@ class FoundItemsPreview(private var players: ArrayList<Player>, private var sort
                     return
                 }
 
-                gui.setItem(previewSlots[index], ItemStack(team.foundItems[index]))
+                val foundItem = team.foundItems[index]
+
+                val foundItemStack = ItemStack(foundItem.item)
+                val foundItemMeta = foundItemStack.itemMeta
+                val lore = mutableListOf(Format.of("<gray>Found at <yellow>${formatTime(foundItem.time)}"))
+                if (foundItem.skipped) lore.add(Format.of("<red>Skipped"))
+                foundItemMeta.lore(lore)
+                foundItemStack.setItemMeta(foundItemMeta)
+
+                gui.setItem(previewSlots[index % (previewSlots.size)], foundItemStack)
 
                 for (player in players) {
                     player.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1F, 1F)
@@ -93,7 +103,7 @@ class FoundItemsPreview(private var players: ArrayList<Player>, private var sort
 
                 index++
 
-                if ((index + 1) % previewSlots.size == 0) {
+                if ((index) % previewSlots.size == 0) {
                     for (slot in previewSlots) {
                         gui.clear(slot)
                     }

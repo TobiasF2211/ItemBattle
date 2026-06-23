@@ -1,5 +1,6 @@
 package net.itemBattle.team
 
+import net.itemBattle.manager.BackpackManager
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.jetbrains.annotations.Nullable
@@ -15,18 +16,20 @@ object TeamManager {
         val scoreTeam = scoreboard.registerNewTeam("itembattle_${UUID.randomUUID()}")
         val team = Team(scoreTeam)
 
+        BackpackManager.createBackpack(team)
+
         teams.add(team)
         team.init()
     }
 
     fun deleteTeam(teamIndex: Int) {
+        BackpackManager.removeBackpack(getTeam(teamIndex))
+
         teams[teamIndex].scoreboardTeam.unregister()
         teams.removeAt(teamIndex)
     }
 
-    fun getTeam(teamIndex: Int): Team? {
-        if (teamIndex !in teams.indices) return null
-
+    fun getTeam(teamIndex: Int): Team {
         return teams[teamIndex]
     }
 

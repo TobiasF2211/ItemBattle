@@ -12,3 +12,15 @@ commands:
     usage: /itembattle <SubCommand>
     aliases:
       - ib
+  msg:
+    usage: /msg <Player> <Message>
+    aliases:
+      - m
+  msgteam:
+    usage: /msgteam <Message>
+    aliases:
+      - mt
+  backpack:
+    usage: /backpack
+    aliases:
+      - bp

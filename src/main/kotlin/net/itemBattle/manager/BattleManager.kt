@@ -2,12 +2,13 @@ package net.itemBattle.manager
 
 import net.itemBattle.ItemBattle
 import net.itemBattle.inventories.FoundItemsPreview
+import net.itemBattle.objects.FoundItem
+import net.itemBattle.objects.TimerUtil
 import net.itemBattle.renderer.Animations
 import net.itemBattle.team.Team
 import net.itemBattle.team.TeamManager
 import net.itemBattle.utils.Format
 import net.itemBattle.utils.Prefix
-import net.itemBattle.utils.TimerUtil
 import org.bukkit.*
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
@@ -92,7 +93,7 @@ object BattleManager {
                     val team: Team = TeamManager.getTeamFromPlayer(player)!!
 
                     if (ItemGenerator.containsItem(player.inventory, team.currentItem!!)) {
-                        team.foundItems.add(team.currentItem!!)
+                        team.foundItems.add(FoundItem(team.currentItem!!, false, timerUtil.secondsRemaining))
                         ItemGenerator.generateItem(team)
                     }
                 }
