@@ -24,6 +24,10 @@ object BackpackManager {
 
     fun getBackpack(team: Team): Backpack? = backpacks[team]
 
+    fun clear() {
+        backpacks.clear()
+    }
+
     class BackpackInventory : InventoryHolder {
 
         val gui = Bukkit.createInventory(this, 54, Format.of("Backpack"))

@@ -1,6 +1,7 @@
 package net.itemBattle.inventories
 
 import net.itemBattle.ItemBattle
+import net.itemBattle.manager.BattleManager
 import net.itemBattle.renderer.Animations
 import net.itemBattle.team.Team
 import net.itemBattle.utils.Format
@@ -122,7 +123,9 @@ class FoundItemsPreview(private var players: ArrayList<Player>, private var sort
         Animations.placeAnimation(team, place)
 
         Bukkit.getScheduler().runTaskLater(ItemBattle.instance, Runnable {
-            if (place - 1 != 0) FoundItemsPreview(players, sortedTeams, place - 1).openInventory()
+            if (place - 1 != 0) {
+                FoundItemsPreview(players, sortedTeams, place - 1).openInventory()
+            } else BattleManager.finalCleanUp()
         }, 20 * 2)
     }
 

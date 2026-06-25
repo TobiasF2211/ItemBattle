@@ -2,6 +2,7 @@ package net.itemBattle.manager
 
 import net.itemBattle.ItemBattle
 import net.itemBattle.inventories.FoundItemsPreview
+import net.itemBattle.objects.Backpack
 import net.itemBattle.objects.FoundItem
 import net.itemBattle.objects.TimerUtil
 import net.itemBattle.renderer.Animations
@@ -67,6 +68,17 @@ object BattleManager {
         }.runTaskTimer(ItemBattle.instance, 0, 20L)
     }
 
+    fun finalCleanUp() {
+        for (team in TeamManager.teams) {
+            team.itemDisplayOverHead.cancel()
+        }
+
+        TeamManager.teams.clear()
+
+        activ = false
+        BackpackManager.clear()
+    }
+
     private fun perTeamAnimation(world: World, skipsPerPlayer: Int) {
         for (team in TeamManager.teams) {
             ItemGenerator.generateItem(team)
@@ -102,17 +114,21 @@ object BattleManager {
     }
 
     private fun sendReminders(seconds: Int) {
-        fun sendReminder(seconds: Int) {
+        fun sendReminder(seconds: Int, asMinutes: Boolean) {
             for (uuid in TeamManager.getAllPlayers()) {
                 val player = Bukkit.getPlayer(uuid) ?: continue
 
                 player.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1F, 1F)
-                player.sendMessage(Prefix.get() + "§e${seconds}s §7remaining.")
+
+                if (asMinutes) {
+                    player.sendMessage(Prefix.get() + "§e${seconds}m §7remaining.")
+                } else player.sendMessage(Prefix.get() + "§e${seconds}s §7remaining.")
             }
         }
 
         when (seconds) {
-            5, 4, 3, 2, 1, 60, 60 * 5, 60 * 10 -> sendReminder(seconds)
+            5, 4, 3, 2, 1, 60 -> sendReminder(seconds, false)
+            30 * 60, 10 * 60, 5 * 60 -> sendReminder(seconds / 60, true)
         }
     }
 
