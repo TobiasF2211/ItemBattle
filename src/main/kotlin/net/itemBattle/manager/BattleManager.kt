@@ -29,7 +29,7 @@ object BattleManager {
     lateinit var itemChecker: BukkitTask
 
     fun getSkipItemStack(): ItemStack {
-        val key = NamespacedKey(ItemBattle.instance, "skip_itemstack")
+        val key = getSkipNamespaceKey()
 
         val skipStack = ItemStack(Material.BARRIER)
         val skipMeta = skipStack.itemMeta
@@ -42,6 +42,8 @@ object BattleManager {
 
         return skipStack
     }
+
+    fun getSkipNamespaceKey() = NamespacedKey(ItemBattle.instance, "skip_itemstack")
 
     fun start(timeInMinutes: Int, world: World, skipsPerPlayer: Int) {
         this.activ = true
@@ -91,7 +93,6 @@ object BattleManager {
 
                 val skipStack = getSkipItemStack()
                 skipStack.amount = skipsPerPlayer
-                team.skipsPerPlayer[uuid] = skipsPerPlayer
                 player.inventory.addItem(skipStack)
             }
         }

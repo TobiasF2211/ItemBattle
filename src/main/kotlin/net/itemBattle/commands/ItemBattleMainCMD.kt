@@ -1,6 +1,10 @@
 package net.itemBattle.commands
 
-import net.itemBattle.commands.subcmds.*
+import net.itemBattle.commands.subcmds.AbortCMD
+import net.itemBattle.commands.subcmds.HelpCMD
+import net.itemBattle.commands.subcmds.PauseTimerCMD
+import net.itemBattle.commands.subcmds.StartCMD
+import net.itemBattle.commands.subcmds.TeamConfiguratorCMD
 import net.itemBattle.utils.Prefix
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -16,6 +20,7 @@ class ItemBattleMainCMD : CommandExecutor, TabCompleter {
         add(TeamConfiguratorCMD())
         add(StartCMD())
         add(PauseTimerCMD())
+        add(AbortCMD())
     }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {

@@ -7,9 +7,12 @@ import net.itemBattle.manager.BattleManager
 import net.itemBattle.team.TeamManager
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.block.Action
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
+import org.bukkit.event.inventory.InventoryType
 import org.bukkit.event.player.PlayerInteractEvent
+import org.bukkit.persistence.PersistentDataType
 
 class InventoryListener : Listener {
 
@@ -44,15 +47,22 @@ class InventoryListener : Listener {
     @EventHandler
     fun onItemInteract(event: PlayerInteractEvent) {
         val player = event.player
+        val meta = player.inventory.itemInMainHand.itemMeta
 
-        if (player.inventory.itemInMainHand != BattleManager.getSkipItemStack()) return
+        if (event.action != Action.RIGHT_CLICK_AIR && event.action != Action.RIGHT_CLICK_BLOCK) return
+
+        if (meta == null || !meta.persistentDataContainer.has(
+                BattleManager.getSkipNamespaceKey(),
+                PersistentDataType.BYTE
+            )
+        ) return
 
         event.isCancelled = true
 
         player.inventory.itemInMainHand.amount -= 1
 
-        val team = TeamManager.getTeamFromPlayer(player)
+        val team = TeamManager.getTeamFromPlayer(player) ?: return
 
-        team?.skipCurrentItem(player)
+        team.skipCurrentItem(player)
     }
 }

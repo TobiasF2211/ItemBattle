@@ -1,6 +1,5 @@
 package net.itemBattle.renderer
 
-import net.itemBattle.ItemBattle
 import net.itemBattle.team.Team
 import net.itemBattle.team.TeamManager
 import net.itemBattle.utils.Format
@@ -8,11 +7,7 @@ import net.itemBattle.utils.Prefix
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextColor
 import net.kyori.adventure.title.Title
-import org.bukkit.Bukkit
-import org.bukkit.GameMode
-import org.bukkit.Material
-import org.bukkit.Sound
-import org.bukkit.World
+import org.bukkit.*
 import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType

@@ -21,7 +21,6 @@ class Team() {
 
     val members = ArrayList<UUID>()
     val foundItems = ArrayList<FoundItem>()
-    val skipsPerPlayer = HashMap<UUID, Int>()
 
     val itemDisplayOverHead = ItemDisplayOverHead()
     var scoreboardTeam = scoreboard.registerNewTeam("itembattle_${UUID.randomUUID()}")
@@ -60,8 +59,6 @@ class Team() {
     fun index(): Int = TeamManager.teams.indexOf(this)
 
     fun skipCurrentItem(playerWhoSkipped: Player) {
-        skipsPerPlayer[playerWhoSkipped.uniqueId] = skipsPerPlayer[playerWhoSkipped.uniqueId]?.minus(1) ?: return
-
         playerWhoSkipped.inventory.addItem(ItemStack(currentItem!!))
 
         for (uuid in members) {

@@ -6,10 +6,7 @@ import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
-import java.util.Locale
-
-import kotlin.Array
-import kotlin.Boolean
+import java.util.*
 
 class MsgCMD : CommandExecutor, TabCompleter {
 

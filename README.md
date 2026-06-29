@@ -17,6 +17,6 @@ Create teams using **/ib teamconfig**
 
 Start the game using **/ib start**
 
-#### Compile it yourself to play it with your friends.
+### Compile it yourself using `./gradlew build`
 
 ## Have fun!

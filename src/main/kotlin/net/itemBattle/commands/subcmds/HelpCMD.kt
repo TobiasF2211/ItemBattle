@@ -14,7 +14,9 @@ class HelpCMD : IBCmd {
         }
 
         commandSender.sendMessage("§8--- §eHELP §8---")
+        helpMes("abort", "Aborts the current battle. (Resets all teams and so on)")
         helpMes("help", "Sends this message.")
+        helpMes("pausetimer", "Pauses the timer.")
         helpMes("teamconfig", "Opens the TeamConfigurator GUI.")
         helpMes("start", "Starts the item battle.")
         commandSender.sendMessage("§8--- §eHELP §8---")
