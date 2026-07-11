@@ -21,6 +21,6 @@ class PauseTimerCMD : IBCmd {
     }
 
     override fun getTabCompleter(commandSender: CommandSender, args: Array<String>): List<String> {
-        return listOf()
+        return emptyList()
     }
 }

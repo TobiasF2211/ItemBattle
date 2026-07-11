@@ -42,7 +42,12 @@ class ItemBattleMainCMD : CommandExecutor, TabCompleter {
         subCommands[cmd.cmd] = cmd
     }
 
-    override fun onTabComplete(sender: CommandSender, command: Command, label: String, args: Array<String>): List<String> {
+    override fun onTabComplete(
+        sender: CommandSender,
+        command: Command,
+        label: String,
+        args: Array<String>
+    ): List<String> {
         val completions = ArrayList<String>()
 
         if (args.size == 1) {
@@ -50,8 +55,8 @@ class ItemBattleMainCMD : CommandExecutor, TabCompleter {
 
             completions.addAll(
                 subCommands.keys.stream()
-                    .filter {
-                        completion: String -> completion.startsWith(currentInput)
+                    .filter { completion: String ->
+                        completion.startsWith(currentInput)
                     }
                     .toList()
             )

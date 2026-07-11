@@ -30,15 +30,20 @@ class MsgCMD : CommandExecutor, TabCompleter {
         return true
     }
 
-    override fun onTabComplete(sender: CommandSender, command: Command, label: String, args: Array<String>): List<String> {
+    override fun onTabComplete(
+        sender: CommandSender,
+        command: Command,
+        label: String,
+        args: Array<String>
+    ): List<String> {
         if (args.size == 1) {
-            val completions: MutableList<String> = ArrayList()
-            val currentInput = args[0].lowercase(Locale.getDefault())
+            val completions = ArrayList<String>()
+            val currentInput = args[0].lowercase()
 
             for (player in Bukkit.getOnlinePlayers()) {
                 val name = player.name
 
-                if (name.lowercase(Locale.getDefault()).startsWith(currentInput)) {
+                if (name.lowercase().startsWith(currentInput)) {
                     completions.add(name)
                 }
             }

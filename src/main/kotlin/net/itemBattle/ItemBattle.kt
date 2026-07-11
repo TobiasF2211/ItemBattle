@@ -36,9 +36,15 @@ class ItemBattle : JavaPlugin() {
         logger.info("Loaded successfully!")
     }
 
+    private fun registerListener() {
+        val pl = Bukkit.getPluginManager()
+
+        pl.registerEvents(InventoryListener(), this)
+        pl.registerEvents(PlayerListener(), this)
+    }
+
     override fun onDisable() {
         // remove our garbage
-
         cleanUp()
 
         logger.info("Unloaded successfully!")
@@ -54,12 +60,5 @@ class ItemBattle : JavaPlugin() {
 
             player.displayName(Component.text(player.name))
         }
-    }
-
-    private fun registerListener() {
-        val pl = Bukkit.getPluginManager()
-
-        pl.registerEvents(InventoryListener(), this)
-        pl.registerEvents(PlayerListener(), this)
     }
 }

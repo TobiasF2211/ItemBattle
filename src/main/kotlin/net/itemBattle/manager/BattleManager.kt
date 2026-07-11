@@ -37,7 +37,7 @@ object BattleManager {
         skipMeta.lore(listOf(Format.of("<dark_gray>➥ <gray>Skip the current item by right clicking.")))
         skipMeta.addEnchant(Enchantment.MENDING, 1, true)
         skipMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS)
-        skipMeta.persistentDataContainer.set(key, PersistentDataType.BYTE, 1.toByte());
+        skipMeta.persistentDataContainer.set(key, PersistentDataType.BYTE, 1.toByte())
         skipStack.itemMeta = skipMeta
 
         return skipStack

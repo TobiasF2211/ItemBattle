@@ -27,7 +27,12 @@ object Animations {
     }
 
     fun startInAnimation(player: Player, seconds: Int) {
-        player.showTitle(Title.title(Format.of("<dark_gray>» <yellow><b>Start in $seconds</b> <dark_gray>«"), Component.empty()))
+        player.showTitle(
+            Title.title(
+                Format.of("<dark_gray>» <yellow><b>Start in $seconds</b> <dark_gray>«"),
+                Component.empty()
+            )
+        )
         player.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1F, 1F)
     }
 
@@ -57,8 +62,12 @@ object Animations {
                 else -> "<black>"
             }
 
-            player.showTitle(Title.title(Format.of("<gray>Team <yellow>${team.index() + 1} <gray>#$color$place <dark_gray><<yellow>${team.foundItems.size} <gray>Items<dark_gray>>"),
-                Format.of("<yellow>Congratulations!")))
+            player.showTitle(
+                Title.title(
+                    Format.of("<gray>Team <yellow>${team.index() + 1} <gray>#$color$place <dark_gray><<yellow>${team.foundItems.size} <gray>Items<dark_gray>>"),
+                    Format.of("<yellow>Congratulations!")
+                )
+            )
             player.playSound(player, Sound.ENTITY_ENDER_DRAGON_GROWL, 0.5F, 1F)
 
             if (place == 1) {

@@ -17,7 +17,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.scoreboard.Team
 import java.util.*
 
-class Team() {
+class Team {
 
     val members = ArrayList<UUID>()
     val foundItems = ArrayList<FoundItem>()

@@ -19,7 +19,8 @@ class TeamAddMemberInv(
     private var teamConfigInv: TeamConfiguratorInv
 ) : InventoryHolder {
 
-    private var gui: Inventory = Bukkit.createInventory(this, 3 * 9, Format.of("Add members to team <yellow>${team.index() + 1}"))
+    private var gui: Inventory =
+        Bukkit.createInventory(this, 3 * 9, Format.of("Add members to team <yellow>${team.index() + 1}"))
     private var playerSlot = HashMap<Int, Player>()
 
     fun openInventory() {
