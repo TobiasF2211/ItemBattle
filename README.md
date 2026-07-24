@@ -6,16 +6,17 @@ The challenge is collecting items in a team (random items), and whoever collects
 
 ### Some extra features are: 
 
-- skips if an item is too hard to get (elytra for example, you get the item if you skip)
-- a backpack for your team
-- /msg "Player" "Message"
-- /msgteam
+- Skips if an item is too hard to get (elytra for example, you get the item if you skip)
+- **/bp** - Open a backpack for your team, every player of the team can open this backpack.
+- **/msg** "Player" "Message" - Send a message to a player.
+- **/msgteam** "Message" - Send a message to your entire team.
 
 ### Admins:
 
-Create teams using **/ib teamconfig**
-
-Start the game using **/ib start**
+- Create teams using **/ib teamconfig**
+- Start the game using **/ib start**
+- Pause the timer using **/ib pausetimer**
+- Abort the game using **/ib abort**, after aborting you have to reconfigure the teams too.
 
 ### Compile it yourself using `./gradlew build`
 
